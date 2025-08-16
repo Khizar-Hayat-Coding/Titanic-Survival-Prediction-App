@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Titanic Survival Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('static/images/titanic.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px 20px;
+            border-radius: 12px;
+            color: white;
+            backdrop-filter: blur(8px);
+            text-align: left;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            display: block;
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        select{
+            width: 320px;
+        }
+
+        select option {
+            color: black;
+        }
+
+        button {
+            margin-top: 10px;
+            width: auto;
+            padding: 12px;
+            background: gold;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            color: black;
+            font-size: 15px;
+            display: block;
+        }
+
+        button:hover {
+            background: rgb(228, 149, 2);
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            
+        }
+
+        .result.survived {
+            background-color: green;
+        }
+
+        .result.not-survived {
+            background-color: red;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="card">
+            <h2>Titanic Survival Prediction 🚢</h2>
+            <form action="/predict" method="post">
+                <label>Age</label>
+                <input type="number" name="age" step="1" required placeholder="e.g. 29">
+
+                <label>Sex</label>
+                <select name="sex" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label>Fare</label>
+                <input type="number" name="fare" step="0.01" required placeholder="e.g. 7.25">
+
+                <button type="submit">Predict</button>
+            </form>
+            {% if prediction_text %}
+            <div class="result {{ result_class }}" id="result-message">
+                {{ prediction_text }}
+            </div>
+            <script>
+                window.onload = function () {
+                    setTimeout(() => {
+                        const msg = document.getElementById('result-message');
+                        if (msg) msg.style.display = 'none';
+                    }, 3000);
+                }
+                
+            </script>
+            {% endif %}
+
+
+        </div>
+    </div>
+</body>
+
+</html>
